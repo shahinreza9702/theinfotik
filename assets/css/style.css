@@ -25,7 +25,13 @@
     --success: #16A36A;
     --danger: #E63946;
     --overlay: rgba(0, 0, 0, 0.85);
+    --overlay-mid: rgba(0, 0, 0, 0.66);
+    --overlay-veil: rgba(0, 0, 0, 0.3);
     --overlay-fade: rgba(0, 0, 0, 0.05);
+    --overlay-soft: rgba(0, 0, 0, 0.45);
+    --overlay-line: rgba(255, 255, 255, 0.35);
+    --on-media: rgba(255, 255, 255, 0.9);
+    --on-media-faint: rgba(255, 255, 255, 0.5);
     --tint-link: rgba(22, 109, 208, 0.08);
     --ring-link: rgba(22, 109, 208, 0.18);
 
@@ -179,6 +185,37 @@ input{
     width: 0;
     height: 0;
     overflow: hidden;
+}
+
+/* Line clamping: shared by the news card summary and the media card summary
+   so both truncate the same way */
+.u-clamp-2,
+.u-clamp-3{
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+.u-clamp-2{
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+.u-clamp-3{
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+/* Thumbnail for a list row (latest news, trending). One size for both, so
+   the image always sits left of the text at a predictable width */
+.u-thumb{
+    flex: 0 0 auto;
+    width: 96px;
+    /* height:auto overrides the img height attribute (applied as a
+       presentational hint) so aspect-ratio can drive the height */
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background-color: var(--bg-light);
+    border-radius: var(--radius-sm);
 }
 
 /* Gap scale */
@@ -451,29 +488,39 @@ input{
 .panel{
     min-width: 0;
 }
+/* Panel heading row: heading left, action right (Latest News) */
+.panel__head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
 .panel__more{
     display: inline-block;
     /* 4px vertical padding keeps the link at least 24px tall on pointer devices */
     padding: 4px 0;
-    margin-top: var(--space-4);
     font-size: 14px;
     font-weight: 600;
     color: var(--link-btn);
 }
-.panel__more:hover{
-    text-decoration: underline;
-}
 
-/* Latest news rows */
+/* Latest news rows: thumbnail left, tag + meta + headline right */
 .story-list{
     border-top: 1px solid var(--border);
 }
 .story__link{
-    display: block;
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
     padding: 12px 0;
 }
 .story + .story .story__link{
     border-top: 1px solid var(--border);
+}
+.story__body{
+    flex: 1;
+    min-width: 0;
 }
 .story__meta{
     display: flex;
@@ -489,9 +536,9 @@ input{
     text-transform: uppercase;
     color: var(--link-btn);
 }
-.story__time{
-    font-size: 12px;
-    color: var(--text-faint);
+/* Pushes the time and reading time to the far end of the tag row */
+.story__meta .article-meta{
+    margin-left: auto;
 }
 .story__title{
     display: block;
@@ -501,33 +548,47 @@ input{
     transition: color var(--transition-fast);
 }
 
-/* Trending rows */
+/* Trending rows: rank + thumbnail left, headline and meta right */
 .trend-list{
     counter-reset: trend;
     border-top: 1px solid var(--border);
 }
 .trend{
-    display: flex;
-    gap: var(--space-3);
     padding: 12px 0;
     border-top: 1px solid var(--border);
 }
 .trend:first-child{
     border-top: 0;
 }
+.trend__link{
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+}
+.trend__body{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.trend__title{
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+}
 .trend__rank{
+    /* The list is an ordered list, so the number is decorative for
+       assistive technology */
     flex: 0 0 auto;
     width: 22px;
     font-size: 22px;
     font-weight: 800;
     line-height: 1.1;
-    color: var(--text-faint);
+    /* Large text still needs 3:1, which --text-faint misses */
+    color: var(--text-muted);
     font-variant-numeric: tabular-nums;
-}
-.trend__link{
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.4;
     transition: color var(--transition-fast);
 }
 
@@ -560,12 +621,36 @@ input{
 .slider__slide img{
     border-radius: 0;
 }
+/* The overlay strip sits on the image, under the caption text. 132px clears
+   the tallest stack: overlay padding + the 44px controls + the button, which
+   grows to 44px on touch devices */
+.slider__slide .media-card__body{
+    padding-bottom: 132px;
+}
 .js-slider-ready .slider__viewport{
     overflow: hidden;
     scroll-snap-type: none;
 }
 .js-slider-ready .slider__track{
     transition: transform 0.45s ease;
+}
+/* Stacks the magazine button and the controls along the bottom of the slide;
+   flex-end keeps the button directly under the summary whatever the caption
+   height is */
+.slider__overlay{
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    /* Click-through: only the button, the arrows and the dots are targets */
+    pointer-events: none;
+}
+.slider__overlay > *{
+    pointer-events: auto;
 }
 .slider__controls{
     display: none;
@@ -574,8 +659,7 @@ input{
     /* Wraps rather than pushing the controls past a 320px viewport once the
        dots carry their full 44px tap area */
     flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-3);
+    gap: var(--space-2);
 }
 .js-slider-ready .slider__controls{
     display: flex;
@@ -587,17 +671,15 @@ input{
     height: 36px;
     font-size: 22px;
     line-height: 1;
-    color: var(--text-primary);
+    color: var(--bg-surface);
     cursor: pointer;
-    background-color: transparent;
-    border: 1px solid var(--border);
+    background-color: var(--overlay-soft);
+    border: 1px solid var(--overlay-line);
     border-radius: 50%;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     transition: background-color var(--transition-fast),
         border-color var(--transition-fast);
-}
-.slider__btn:hover{
-    background-color: var(--tint-link);
-    border-color: var(--link-btn);
 }
 .slider__dots{
     display: flex;
@@ -622,14 +704,15 @@ input{
     left: 50%;
     width: 9px;
     height: 9px;
-    background-color: var(--border-strong);
+    /* Pale dots keep contrast on the dark caption gradient behind them */
+    background-color: var(--on-media-faint);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: background-color var(--transition-fast),
         transform var(--transition-fast);
 }
 .slider__dot.is-active::after{
-    background-color: var(--link-btn);
+    background-color: var(--bg-surface);
     transform: translate(-50%, -50%) scale(1.25);
 }
 
@@ -680,6 +763,34 @@ input{
     text-transform: uppercase;
 }
 
+/* Article meta row (time ago + reading time). One component, reused by the
+   featured cards, the latest news list and the trending list */
+.article-meta{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px var(--space-3);
+    font-size: 12px;
+    line-height: 1.4;
+    /* 4.8:1 on white, where --text-faint would only reach 2.5:1 */
+    color: var(--text-secondary);
+}
+.article-meta__item{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+/* Divider between the time and the reading time */
+.article-meta__item + .article-meta__item{
+    padding-left: var(--space-3);
+    border-left: 1px solid var(--border);
+}
+.article-meta svg{
+    flex: 0 0 auto;
+    width: 13px;
+    height: 13px;
+}
+
 /* Media card (image + overlay headline). Reused by the hero and news blocks */
 .media-card{
     position: relative;
@@ -699,10 +810,14 @@ input{
     position: absolute;
     inset: 0;
     z-index: 1;
+    /* The dark band reaches past the top of the tallest caption, so summary,
+       meta and button text keep their contrast even over a bright photo */
     background: linear-gradient(
         to top,
         var(--overlay),
-        var(--overlay-fade) 70%
+        var(--overlay-mid) 62%,
+        var(--overlay-veil) 82%,
+        var(--overlay-fade)
     );
 }
 .media-card img{
@@ -723,6 +838,54 @@ input{
 .media-card__title{
     font-size: 20px;
     line-height: 1.25;
+}
+/* Short summary under a headline on the image overlay */
+.media-card__summary{
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--on-media);
+}
+/* Trailing-arrow button on a media caption. Shared by the hero lead card and
+   the magazine slider. align-self keeps it at its label width: children of the
+   slider overlay would otherwise stretch to the full column */
+.media-cta{
+    align-self: flex-start;
+}
+.media-cta__arrow{
+    font-size: 18px;
+    line-height: 1;
+    transition: transform var(--transition-base);
+}
+/* Hero lead: the button is pinned under the caption's meta row */
+.media-card--lead .media-cta{
+    position: absolute;
+    bottom: var(--space-5);
+    left: var(--space-5);
+    z-index: 3;
+}
+/* Caption keeps clear of the button above it */
+.media-card--lead .media-card__body{
+    padding-bottom: 76px;
+}
+/* Breathing room between the headline block and the meta row, whether the
+   summary is present or not */
+.media-card__title + .article-meta,
+.media-card__summary + .article-meta{
+    margin-top: var(--space-2);
+}
+/* On the dark overlay the meta row and its dividers switch to the light
+   palette used by the rest of the caption */
+.media-card__body .article-meta{
+    color: var(--on-media);
+}
+.media-card__body .article-meta__item + .article-meta__item{
+    border-left-color: var(--overlay-line);
+}
+/* Byline reads a shade brighter than the timestamps */
+.media-card__body .article-meta__item--by{
+    font-weight: 600;
+    color: var(--bg-surface);
 }
 .media-card--lead .media-card__title{
     font-size: 32px;
@@ -849,16 +1012,11 @@ input{
     margin: 0;
     font-size: 17px;
 }
-.card--news .card__text{
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-}
-.card--news .card__arrow{
-    align-self: flex-start;
-    margin: 0 var(--space-4) var(--space-4);
+/* Time and reading time sit at the bottom of the card, so the meta line stays
+   aligned across a row of cards of equal height */
+.card--news .article-meta{
+    margin-top: auto;
+    padding-top: var(--space-2);
 }
 
 /* Featured stories */
@@ -987,7 +1145,10 @@ input{
 
 
     .story__link:hover .story__title,
-    .trend__link:hover,
+    .trend__link:hover .trend__title{
+        color: var(--link-btn);
+    }
+
     .trend:hover .trend__rank{
         color: var(--link-btn);
     }
@@ -996,13 +1157,17 @@ input{
         text-decoration: underline;
     }
 
-    .slider__btn:hover{
-        background-color: var(--tint-link);
-        border-color: var(--link-btn);
+    .media-cta:hover .media-cta__arrow{
+        transform: translateX(4px);
     }
 
-    .slider__dot:hover{
-        background-color: var(--accent-blue);
+    .slider__btn:hover{
+        background-color: var(--overlay);
+        border-color: var(--bg-surface);
+    }
+
+    .slider__dot:hover::after{
+        background-color: var(--bg-surface);
     }
 
     .social-link:hover{
@@ -1073,8 +1238,10 @@ input{
         gap: var(--space-6);
     }
 
+    /* The overlay strip now carries the button as well, so the slide needs a
+       little more height to keep a usable slice of photo on screen */
     .slider__slide{
-        height: 300px;
+        height: 340px;
     }
 
     .subscribe{
@@ -1092,10 +1259,6 @@ input{
 
     .hero__side{
         grid-template-rows: 220px 220px;
-    }
-
-    .hero__row{
-        grid-template-columns: 1fr 1fr;
     }
 
     .media-card--lead{
@@ -1192,6 +1355,13 @@ input{
 grid-template-columns: 1fr;
     }
 
+    /* Four dots at their full 44px no longer fit beside the arrows on the
+       narrowest phones, so they tighten instead of wrapping onto a second row
+       (which would push the controls up into the summary) */
+    .slider__dot{
+        width: 32px;
+    }
+
     .featured{
         margin-top: var(--space-6);
     }
@@ -1218,8 +1388,10 @@ padding: var(--space-6) 0;
         grid-template-rows: 220px 420px;
     }
 
+    /* The lead caption now carries a summary, a meta row and the button, so the
+       card needs more height than the headline alone needed */
     .media-card--lead{
-        height: 260px;
+        height: 320px;
     }
 
     .media-card--lead .media-card__title{
@@ -1240,8 +1412,6 @@ padding: var(--space-6) 0;
    not by screen width. 16px controls also avoid iOS focus zoom. */
 @media (pointer: coarse){
     .site-nav__list a,
-    .story__link,
-    .trend__link,
     .footer__list a,
     .footer__contact a,
     .social-link,
@@ -1249,6 +1419,15 @@ padding: var(--space-6) 0;
     .slider__btn,
     .btn{
         display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    /* Thumbnail rows stay block-level flex (inline-flex would shrink-wrap the
+       row) and only grow the tap height */
+    .story__link,
+    .trend__link{
+        display: flex;
         align-items: center;
         min-height: 44px;
     }

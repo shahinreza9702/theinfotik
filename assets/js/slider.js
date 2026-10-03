@@ -30,7 +30,8 @@
         var dot = document.createElement("button");
         dot.type = "button";
         dot.className = "slider__dot";
-        dot.setAttribute("role", "tab");
+        // A plain button group rather than a tablist: the dots move the slider
+        // but do not control tab panels
         dot.setAttribute("aria-label", "Feature " + (i + 1) + " of " + slides.length);
         dot.addEventListener("click", function () {
             go(i, true);
@@ -45,8 +46,7 @@
         dots.forEach(function (dot, i) {
             var active = i === index;
             dot.classList.toggle("is-active", active);
-            dot.setAttribute("aria-selected", active ? "true" : "false");
-            dot.setAttribute("tabindex", active ? "0" : "-1");
+            dot.setAttribute("aria-current", active ? "true" : "false");
         });
 
         slides.forEach(function (slide, i) {
