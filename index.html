@@ -3,45 +3,54 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Home - The Infotik</title>
+    <meta name="description"
+        content="The Infotik brings you the latest headlines from Bangladesh and around the world - business, technology, lifestyle and opinion.">
+    <link rel="icon" href="assets/images/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
     <header class="site-header">
         <div class="container">
-            <div class="flex-align-center">
-                <!-- Logo -->
-                <a href="/" class="brand-logo">
-                    <div class="logo-mark">
-                        <svg viewBox="0 0 19.9 40" xmlns="http://www.w3.org/2000/svg" aria-label="The Infotik logo"
-                            role="img">
-                            <path fill="currentColor"
-                                d="M16.64,14.42c-.12.44-.23.87-.34,1.29-.84,3.22-1.7,6.43-2.53,9.65-.45,1.74-.84,3.5-1.09,5.28-.11.77-.19,1.54-.11,2.32.12,1.12.67,1.81,1.75,2.12.78.23,1.57.26,2.37.31.2.01.39.05.62.08-.36.49-.79.85-1.25,1.17-1.24.86-2.62,1.37-4.08,1.65-1.08.21-2.17.28-3.27.13-1.43-.19-2.67-.73-3.54-1.92-.53-.72-.73-1.54-.66-2.43.27-3.2.85-6.35,1.55-9.48.23-1.03.47-2.06.47-3.13,0-1.15-.5-1.82-1.64-2.04-.76-.15-1.54-.19-2.31-.28-.06,0-.12,0-.21-.02.06-.44.1-.86.17-1.28.04-.26.12-.52.2-.77.2-.6.58-1.05,1.19-1.23.67-.2,1.36-.37,2.05-.48,1.46-.24,2.92-.46,4.39-.66,1.31-.18,2.63-.36,3.94-.49.51-.05,1.03.05,1.55.09.26.02.51.06.79.1Z" />
-                            <path fill="currentColor"
-                                d="M17.54,6c-.09,2.42-1.25,4.11-3.34,5.13-1.47.72-3.03.89-4.62.41-1.75-.52-2.95-2.02-3.11-3.85-.15-1.72.3-3.23,1.54-4.46.92-.91,2.06-1.4,3.32-1.62,1.11-.19,2.21-.2,3.3.13,1.61.49,2.52,1.59,2.81,3.23.06.36.08.72.11,1.03Z" />
-                        </svg>
-                    </div>
-                    <div class="logo-content flex-column">
-                        <span class="logo-name">
-                            The Infotik
-                        </span>
-                        <span class="logo-tagline">
-                            Your source of information
-                        </span>
-                    </div>
-                </a>
-            </div>
+            <!-- Logo -->
+            <a href="/" class="brand">
+                <span class="brand__mark">
+                    <svg viewBox="0 0 19.9 40" xmlns="http://www.w3.org/2000/svg" aria-label="The Infotik logo"
+                        role="img">
+                        <path fill="currentColor"
+                            d="M16.64,14.42c-.12.44-.23.87-.34,1.29-.84,3.22-1.7,6.43-2.53,9.65-.45,1.74-.84,3.5-1.09,5.28-.11.77-.19,1.54-.11,2.32.12,1.12.67,1.81,1.75,2.12.78.23,1.57.26,2.37.31.2.01.39.05.62.08-.36.49-.79.85-1.25,1.17-1.24.86-2.62,1.37-4.08,1.65-1.08.21-2.17.28-3.27.13-1.43-.19-2.67-.73-3.54-1.92-.53-.72-.73-1.54-.66-2.43.27-3.2.85-6.35,1.55-9.48.23-1.03.47-2.06.47-3.13,0-1.15-.5-1.82-1.64-2.04-.76-.15-1.54-.19-2.31-.28-.06,0-.12,0-.21-.02.06-.44.1-.86.17-1.28.04-.26.12-.52.2-.77.2-.6.58-1.05,1.19-1.23.67-.2,1.36-.37,2.05-.48,1.46-.24,2.92-.46,4.39-.66,1.31-.18,2.63-.36,3.94-.49.51-.05,1.03.05,1.55.09.26.02.51.06.79.1Z" />
+                        <path fill="currentColor"
+                            d="M17.54,6c-.09,2.42-1.25,4.11-3.34,5.13-1.47.72-3.03.89-4.62.41-1.75-.52-2.95-2.02-3.11-3.85-.15-1.72.3-3.23,1.54-4.46.92-.91,2.06-1.4,3.32-1.62,1.11-.19,2.21-.2,3.3.13,1.61.49,2.52,1.59,2.81,3.23.06.36.08.72.11,1.03Z" />
+                    </svg>
+                </span>
+                <span class="brand__text">
+                    <span class="brand__name">
+                        The Infotik
+                    </span>
+                    <span class="brand__tagline">
+                        Your source of information
+                    </span>
+                </span>
+            </a>
         </div>
     </header>
     <!-- Site Navigation -->
     <nav class="site-nav" aria-label="Primary navigation">
         <div class="container">
-            <div class="flex-justify-between">
-                <div class="flex-align-center">
-                    <ul class="flex-align-center">
-                        <li><a href="/">Home</a></li>
+            <div class="site-nav__inner">
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu"
+                    aria-label="Menu">
+                    <span class="nav-toggle__bars" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <div class="site-nav__panel" id="primary-menu">
+                    <ul class="site-nav__list">
+                        <li><a href="/" aria-current="page">Home</a></li>
                         <li><a href="/#">Bangladesh</a></li>
                         <li><a href="/#">World</a></li>
                         <li><a href="/#">Business</a></li>
@@ -50,13 +59,12 @@
                         <li><a href="/#">Opinion</a></li>
                     </ul>
                 </div>
-                <div class="flex-justify-center">
-                    <form action="" class="search-form">
-                        <label for="search" class="sr-only">Search</label>
-                        <input type="search" id="search" name="search" placeholder="Search...">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
+                <form method="get" class="form-inline" role="search">
+                    <label for="search" class="sr-only">Search articles</label>
+                    <input class="input" type="search" id="search" name="q" placeholder="Search..."
+                        enterkeyhint="search" autocomplete="off">
+                    <button type="submit" class="btn btn--primary">Search</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -65,58 +73,196 @@
         <!-- Main content goes here -->
         <div class="container">
             <!-- Hero Section -->
-            <div class="hero section">
-                <div class="hero-grid">
-                    <article class="hero-item">
-                        <a href="/#">
-                            <img src="assets/images/hero-main.jpg" alt="Hero Image 1">
-                            <div class="hero-content">
-                                <span class="category">Bangladesh</span>
-                                <h1 class="title">Bangladesh's Economic Growth: A Closer Look at the Numbers</h1>
+            <section class="hero">
+                <div class="hero__grid">
+                    <article class="media-card media-card--lead">
+                        <a class="media-card__link" href="/#">
+                            <img src="assets/images/hero-main.jpg" width="8640" height="5760"
+                                alt="Illustrative photo accompanying a report on Bangladesh's economic growth"
+                                fetchpriority="high" decoding="async">
+                            <div class="media-card__body">
+                                <span class="meta">Bangladesh</span>
+                                <h1 class="media-card__title">Bangladesh's Economic Growth: A Closer Look at the Numbers</h1>
                             </div>
                         </a>
                     </article>
-                    <div class="hero-right">
-                        <article class="hero-item">
-                            <a href="/article/second-news/">
-                                <img src="assets/images/hero-2.jpg" alt="Second news headline">
+                    <div class="hero__side">
+                        <article class="media-card">
+                            <a class="media-card__link" href="/article/second-news/">
+                                <img src="assets/images/hero-2.jpg" width="5228" height="3485"
+                                    alt="Illustrative photo accompanying a world news report" loading="lazy"
+                                    decoding="async">
 
-                                <div class="hero-content">
-                                    <span class="category">World</span>
-                                    <h2>Second news headline goes here</h2>
+                                <div class="media-card__body">
+                                    <span class="meta">World</span>
+                                    <h2 class="media-card__title">Second news headline goes here</h2>
                                 </div>
                             </a>
                         </article>
-                        <div class="hero-bottom">
-                            <article class="hero-item">
-                                <a href="/article/third-news/">
-                                    <img src="assets/images/hero-3.jpg" alt="Third news headline">
-                                    <div class="hero-content">
-                                        <span class="category">Business</span>
-                                        <h2>Third news headline goes here</h2>
+                        <div class="hero__row">
+                            <article class="media-card">
+                                <a class="media-card__link" href="/article/third-news/">
+                                    <img src="assets/images/hero-3.jpg" width="3000" height="2000"
+                                        alt="Illustrative photo accompanying a business report" loading="lazy"
+                                        decoding="async">
+                                    <div class="media-card__body">
+                                        <span class="meta">Business</span>
+                                        <h2 class="media-card__title">Third news headline goes here</h2>
                                     </div>
                                 </a>
                             </article>
 
-                            <article class="hero-item">
-                                <a href="/article/third-news/">
-                                    <img src="assets/images/hero-4.jpg" alt="Third news headline">
-                                    <div class="hero-content">
-                                        <span class="category">Business</span>
-                                        <h2>Third news headline goes here</h2>
+                            <article class="media-card">
+                                <a class="media-card__link" href="/article/fourth-news/">
+                                    <img src="assets/images/hero-4.jpg" width="8455" height="5637"
+                                        alt="Illustrative photo accompanying a business report" loading="lazy"
+                                        decoding="async">
+                                    <div class="media-card__body">
+                                        <span class="meta">Business</span>
+                                        <h2 class="media-card__title">Fourth news headline goes here</h2>
                                     </div>
                                 </a>
                             </article>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Categories section -->
+            <section class="categories">
+                <div class="section__header">
+                    <h2 class="section__title">Explore Categories</h2>
+                </div>
+                <div class="u-grid u-cols-6 u-gap-md">
+                    <!-- Bangladesh -->
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">Bangladesh</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">World</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">Business</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">Technology</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">Lifestyle</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <a href="/bangladesh/" class="card__link">
+                            <span class="card__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <use href="#icon-pin"></use>
+                                </svg>
+                            </span>
+
+                            <div class="card__body">
+                                <h3 class="card__title">Opinion</h3>
+                                <p class="card__text">Local Updates</p>
+                            </div>
+
+                            <span class="card__arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Featured stories -->
+            <section class="featured">
+                <div class="section__header">
+                    <h2 class="section__title">Featured Stories</h2>
+                </div>
+            </section>
         </div>
     </main>
     <footer class="site-footer">
         <div class="container">
-            <div class="flex-column">
-                <ul class="flex-align-center">
+            <div class="site-footer__inner">
+                <ul class="link-row">
                     <li><a href="/#">Privacy Policy</a></li>
                     <li><a href="/#">Terms of Service</a></li>
                     <li><a href="/#">Contact Us</a></li>
@@ -125,6 +271,15 @@
             </div>
         </div>
     </footer>
+<!-- Icon sprite: one definition reused by every card through a use reference -->
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-pin" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8Z" stroke="currentColor"
+            stroke-width="1.8" />
+        <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8" />
+    </symbol>
+</svg>
+<script src="assets/js/nav.js" defer></script>
 </body>
 
 </html>
