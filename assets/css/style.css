@@ -1,6 +1,6 @@
-﻿/* =========================================================================
-   The Infotik â€” stylesheet
-   Layers: 1 Tokens Â· 2 Reset & base Â· 3 Utilities Â· 4 Components Â· 5 Media
+/* =========================================================================
+   The Infotik — stylesheet
+   Layers: 1 Tokens · 2 Reset & base · 3 Utilities · 4 Components · 5 Media
    ========================================================================= */
 
 /* ---------- 1. Tokens ---------- */
@@ -199,6 +199,9 @@ input{
 }
 .u-cols-4{
     grid-template-columns: repeat(4, 1fr);
+}
+.u-cols-5{
+    grid-template-columns: repeat(5, 1fr);
 }
 .u-cols-6{
     grid-template-columns: repeat(6, 1fr);
@@ -420,15 +423,252 @@ input{
     line-height: 1.2;
     color: var(--text-primary);
 }
+.section__title--sm{
+    font-size: 18px;
+}
 .section__title::before{
     content: "";
     position: absolute;
     top: 50%;
     left: 0;
+    /* 1em keeps the accent bar in step with whatever font size is set */
     width: 5px;
-    height: 24px;
+    height: 1em;
     background: var(--link-btn);
     transform: translateY(-50%);
+}
+
+/* ---------- Panels (Latest / Magazine / Trending) ---------- */
+.spotlight{
+    margin-top: var(--space-10);
+}
+.spotlight__grid{
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+}
+.panel{
+    min-width: 0;
+}
+.panel__more{
+    display: inline-block;
+    /* 4px vertical padding keeps the link at least 24px tall on pointer devices */
+    padding: 4px 0;
+    margin-top: var(--space-4);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--link-btn);
+}
+.panel__more:hover{
+    text-decoration: underline;
+}
+
+/* Latest news rows */
+.story-list{
+    border-top: 1px solid var(--border);
+}
+.story__link{
+    display: block;
+    padding: 12px 0;
+}
+.story + .story .story__link{
+    border-top: 1px solid var(--border);
+}
+.story__meta{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: 4px;
+}
+.story__tag{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--link-btn);
+}
+.story__time{
+    font-size: 12px;
+    color: var(--text-faint);
+}
+.story__title{
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+}
+
+/* Trending rows */
+.trend-list{
+    counter-reset: trend;
+    border-top: 1px solid var(--border);
+}
+.trend{
+    display: flex;
+    gap: var(--space-3);
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+}
+.trend:first-child{
+    border-top: 0;
+}
+.trend__rank{
+    flex: 0 0 auto;
+    width: 22px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+}
+.trend__link{
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+}
+
+/* Magazine slider */
+.slider{
+    position: relative;
+}
+.slider__viewport{
+    /* No-JS fallback: the slides stay swipeable instead of showing dead
+       controls. slider.js adds .js-slider-ready, which takes over below. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: var(--radius-md);
+}
+.slider__viewport::-webkit-scrollbar{
+    display: none;
+}
+.slider__track{
+    display: flex;
+}
+.slider__slide{
+    flex: 0 0 100%;
+    height: 430px;
+    scroll-snap-align: start;
+    border-radius: 0;
+}
+.slider__slide img{
+    border-radius: 0;
+}
+.js-slider-ready .slider__viewport{
+    overflow: hidden;
+    scroll-snap-type: none;
+}
+.js-slider-ready .slider__track{
+    transition: transform 0.45s ease;
+}
+.slider__controls{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    /* Wraps rather than pushing the controls past a 320px viewport once the
+       dots carry their full 44px tap area */
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+}
+.js-slider-ready .slider__controls{
+    display: flex;
+}
+.slider__btn{
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--text-primary);
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    transition: background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+.slider__btn:hover{
+    background-color: var(--tint-link);
+    border-color: var(--link-btn);
+}
+.slider__dots{
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.slider__dot{
+    /* 44px button carrying a 9px dot drawn by ::after, so the tap area meets
+       the minimum without a bulky control */
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+}
+.slider__dot::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    background-color: var(--border-strong);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+.slider__dot.is-active::after{
+    background-color: var(--link-btn);
+    transform: translate(-50%, -50%) scale(1.25);
+}
+
+/* Email subscription */
+.subscribe{
+    margin-top: var(--space-10);
+}
+.subscribe__inner{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background-color: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+.subscribe__copy{
+    flex: 1 1 320px;
+    min-width: 0;
+}
+.subscribe__text{
+    margin-top: var(--space-2);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+/* Higher specificity than the generic .form-inline rule in the media
+   queries, so the form keeps a 320px basis and wraps onto its own line
+   instead of being squeezed to a few pixels */
+.subscribe__inner .subscribe__form{
+    flex: 1 1 320px;
+    min-width: 0;
+}
+.subscribe__form .input{
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    background-color: var(--bg-surface);
 }
 
 /* Category / news meta label above a headline */
@@ -574,39 +814,142 @@ input{
         color var(--transition-base);
 }
 
-/* Link row (inline list of footer / social links) */
-.link-row{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px 24px;
+/* News card (same shell, photo + headline + summary) */
+.card--news{
+    border-top: 3px solid var(--link-btn);
 }
-.link-row a{
-    /* inline-block + padding keeps each footer link at least 24px tall
-       (WCAG 2.2 target size) even on pointer devices */
-    display: inline-block;
-    padding: 3px 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    transition: color var(--transition-fast);
+.card--news .card__link{
+    align-items: stretch;
+    gap: 0;
+    height: 100%;
+    padding: 0;
+    text-align: left;
+}
+.card__media{
+    width: 100%;
+    /* height:auto overrides the img height attribute (applied as a
+       presentational hint) so aspect-ratio can drive the height */
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background-color: var(--bg-light);
+    transition: transform var(--transition-slow);
+}
+.card--news .card__body{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+}
+.card--news .meta{
+    margin-bottom: 0;
+}
+.card--news .card__title{
+    margin: 0;
+    font-size: 17px;
+}
+.card--news .card__text{
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+.card--news .card__arrow{
+    align-self: flex-start;
+    margin: 0 var(--space-4) var(--space-4);
+}
+
+/* Featured stories */
+.featured{
+    margin-top: var(--space-10);
 }
 
 /* Footer */
 .site-footer{
-    padding: var(--space-10) 0;
+    margin-top: var(--space-10);
     background-color: var(--bg-primary);
     border-top: 1px solid var(--border);
 }
-.site-footer__inner{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-    text-align: center;
+.footer-grid{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: var(--space-6);
+    padding: var(--space-10) 0;
 }
-.site-footer p{
+.footer__about{
+    margin-top: var(--space-4);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.footer__title{
+    margin: 0 0 var(--space-4);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+.footer__list li + li{
+    margin-top: 10px;
+}
+.footer__list a{
+    /* keeps each link at least 24px tall (WCAG 2.2 target size) on pointer devices */
+    display: inline-block;
+    padding: 3px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+.footer__contact p{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: normal;
+}
+.footer__contact a{
+    /* keeps each link at least 24px tall (WCAG 2.2 target size) on pointer devices */
+    display: inline-block;
+    padding: 3px 0;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+.footer__contact p + p{
+    margin-top: 10px;
+}
+
+/* Icon-only social links */
+.social-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+.social-link{
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    transition: color var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+.social-link svg{
+    width: 18px;
+    height: 18px;
+}
+
+/* Copyright bar */
+.footer-bottom{
+    padding: var(--space-4) 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+.footer-bottom p{
     font-size: 14px;
     color: var(--text-secondary);
 }
@@ -638,7 +981,37 @@ input{
         transform: translateX(4px);
     }
 
-    .link-row a:hover{
+    .card--news:hover .card__media{
+        transform: scale(1.05);
+    }
+
+
+    .story__link:hover .story__title,
+    .trend__link:hover,
+    .trend:hover .trend__rank{
+        color: var(--link-btn);
+    }
+
+    .panel__more:hover{
+        text-decoration: underline;
+    }
+
+    .slider__btn:hover{
+        background-color: var(--tint-link);
+        border-color: var(--link-btn);
+    }
+
+    .slider__dot:hover{
+        background-color: var(--accent-blue);
+    }
+
+    .social-link:hover{
+        color: var(--link-btn);
+        background-color: var(--tint-link);
+        border-color: var(--link-btn);
+    }
+
+    .footer__contact a:hover{
         color: var(--link-btn);
     }
 
@@ -648,9 +1021,30 @@ input{
 }
 
 /* ---------- 6. Responsive ---------- */
+@media (max-width: 1200px){
+    .u-cols-5{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1024px){
     .hero__grid{
         height: 520px;
+    }
+
+    /* Three panels no longer fit side by side: magazine on top, lists below */
+    .spotlight__grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .panel--feature{
+        grid-column: 1 / -1;
+        order: -1;
+    }
+
+    .footer-grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5);
     }
 
     /* Column counts step down so cards never squeeze below a readable width */
@@ -668,6 +1062,27 @@ input{
        a large part of a phone screen (stays sticky on tablet/desktop) */
     .site-nav{
         position: static;
+    }
+
+    .spotlight{
+        margin-top: var(--space-6);
+    }
+
+    .spotlight__grid{
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+
+    .slider__slide{
+        height: 300px;
+    }
+
+    .subscribe{
+        margin-top: var(--space-6);
+    }
+
+    .subscribe__inner{
+        padding: var(--space-5);
     }
 
     .hero__grid{
@@ -696,6 +1111,7 @@ input{
     }
 
     .u-cols-6,
+    .u-cols-5,
     .u-cols-3{
         grid-template-columns: repeat(2, 1fr);
     }
@@ -771,12 +1187,26 @@ input{
         font-size: 22px;
     }
 
-    .section__title{
-        font-size: 20px;
+    /* News headlines need a full-width column to stay readable */
+    .u-cols-5{
+grid-template-columns: 1fr;
     }
 
-    .section__title::before{
-        height: 20px;
+    .featured{
+        margin-top: var(--space-6);
+    }
+
+    .site-footer{
+        margin-top: var(--space-6);
+    }
+
+    .footer-grid{
+        grid-template-columns: 1fr;
+padding: var(--space-6) 0;
+    }
+
+    .section__title{
+        font-size: 20px;
     }
 
     .hero__row{
@@ -810,7 +1240,13 @@ input{
    not by screen width. 16px controls also avoid iOS focus zoom. */
 @media (pointer: coarse){
     .site-nav__list a,
-    .link-row a,
+    .story__link,
+    .trend__link,
+    .footer__list a,
+    .footer__contact a,
+    .social-link,
+    .panel__more,
+    .slider__btn,
     .btn{
         display: inline-flex;
         align-items: center;
@@ -824,6 +1260,32 @@ input{
     .btn,
     .input{
         font-size: 16px;
+    }
+
+    /* Short labels like "Home" are narrower than the minimum on their own,
+       so the single-word footer links get a floor as well */
+    .footer__list a{
+        min-width: 44px;
+    }
+
+    /* Square off the circular controls: min-height alone left them ovals,
+       and the shared inline-flex rule needs explicit cross-axis centring */
+    .slider__btn,
+    .social-link{
+        min-width: 44px;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+    }
+
+    /* Four 44px dots plus two 44px buttons have to share a 290px-wide
+       320px viewport, so the controls tighten their spacing to fit */
+    .slider__controls{
+        gap: var(--space-1);
+    }
+
+    .slider__dots{
+        gap: var(--space-1);
     }
 }
 
