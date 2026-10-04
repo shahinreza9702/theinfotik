@@ -1,0 +1,1495 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   The Infotik — stylesheet
+   Layers: 1 Tokens · 2 Reset & base · 3 Utilities · 4 Components · 5 Media
+   ========================================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root{
+    /* Color */
+    --bg-primary: #FCFCFD;
+    --bg-light: #F4F7FA;
+    --bg-surface: #FFFFFF;
+    --bg-accent-soft: #EFF6FF;
+    --border: #E3E8EE;
+    --border-muted: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --text-primary: #132238;
+    --text-secondary: #647387;
+    --text-muted: #6B7280;
+    --text-faint: #9CA3AF;
+    --brand-primary: #132D4A;
+    --link-btn: #166DD0;
+    --link-btn-dark: #1257AB;
+    --accent-blue: #2563EB;
+    --warning: #F5A524;
+    --success: #16A36A;
+    --danger: #E63946;
+    --overlay: rgba(0, 0, 0, 0.85);
+    --overlay-mid: rgba(0, 0, 0, 0.66);
+    --overlay-veil: rgba(0, 0, 0, 0.3);
+    --overlay-fade: rgba(0, 0, 0, 0.05);
+    --overlay-soft: rgba(0, 0, 0, 0.45);
+    --overlay-line: rgba(255, 255, 255, 0.35);
+    --on-media: rgba(255, 255, 255, 0.9);
+    --on-media-faint: rgba(255, 255, 255, 0.5);
+    --tint-link: rgba(22, 109, 208, 0.08);
+    --ring-link: rgba(22, 109, 208, 0.18);
+
+    /* Typography */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+
+    /* Spacing scale */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-10: 40px;
+
+    /* Elevation */
+    --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --ring-offset: 3px;
+
+    /* Motion */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.25s ease;
+    --transition-slow: 0.3s ease;
+}
+
+/* ---------- 2. Reset & base ---------- */
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+html{
+    -webkit-text-size-adjust: 100%;
+}
+body{
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+    /* Long words/URLs wrap instead of forcing a sideways scroll on phones */
+    overflow-wrap: break-word;
+}
+img,
+svg{
+    display: block;
+    max-width: 100%;
+}
+button,
+input,
+select,
+textarea{
+    font: inherit;
+}
+
+a{
+    text-decoration: none;
+    color: var(--text-primary);
+}
+ul{
+    padding: 0;
+    margin: 0;
+}
+li{
+    list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+p{
+    margin: 0;
+}
+:focus-visible{
+    outline: 2px solid var(--link-btn);
+    outline-offset: 2px;
+}
+
+/* Touch devices: remove the 300ms tap delay and the default grey tap flash */
+a,
+button,
+input{
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: var(--tint-link);
+}
+
+/* ---------- 3. Utilities ---------- */
+
+/* Visually hidden, still announced by screen readers */
+.sr-only{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip-path: inset(50%);
+}
+
+/* Layout */
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    /* Fallback first, then respect notches / rounded corners on devices */
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-right: max(15px, env(safe-area-inset-right));
+    padding-left: max(15px, env(safe-area-inset-left));
+}
+
+/* Flexbox */
+.u-flex{
+    display: flex;
+}
+.u-inline-flex{
+    display: inline-flex;
+}
+.u-flex-col{
+    display: flex;
+    flex-direction: column;
+}
+.u-wrap{
+    flex-wrap: wrap;
+}
+.u-items-center{
+    align-items: center;
+}
+.u-justify-center{
+    justify-content: center;
+}
+.u-justify-between{
+    justify-content: space-between;
+}
+.u-text-center{
+    text-align: center;
+}
+
+/* Icon sprite: hidden from layout and screen readers, still referenceable */
+.svg-sprite{
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Line clamping: shared by the news card summary and the media card summary
+   so both truncate the same way */
+.u-clamp-2,
+.u-clamp-3{
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+.u-clamp-2{
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+.u-clamp-3{
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+/* Thumbnail for a list row (latest news, trending). One size for both, so
+   the image always sits left of the text at a predictable width */
+.u-thumb{
+    flex: 0 0 auto;
+    width: 96px;
+    /* height:auto overrides the img height attribute (applied as a
+       presentational hint) so aspect-ratio can drive the height */
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background-color: var(--bg-light);
+    border-radius: var(--radius-sm);
+}
+
+/* Gap scale */
+.u-gap-xs{ gap: var(--space-1); }
+.u-gap-sm{ gap: var(--space-2); }
+.u-gap-md{ gap: var(--space-4); }
+.u-gap-lg{ gap: var(--space-5); }
+
+/* Grid */
+.u-grid{
+    display: grid;
+}
+.u-cols-2{
+    grid-template-columns: repeat(2, 1fr);
+}
+.u-cols-3{
+    grid-template-columns: repeat(3, 1fr);
+}
+.u-cols-4{
+    grid-template-columns: repeat(4, 1fr);
+}
+.u-cols-5{
+    grid-template-columns: repeat(5, 1fr);
+}
+.u-cols-6{
+    grid-template-columns: repeat(6, 1fr);
+}
+.u-rows-2{
+    grid-template-rows: repeat(2, 1fr);
+}
+.u-grid-auto{
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* ---------- 4. Components ---------- */
+
+/* Header */
+.site-header{
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+}
+.site-header .container{
+    display: flex;
+    align-items: center;
+    min-height: 80px;
+}
+
+/* Brand (logo + wordmark) */
+.brand{
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--space-3);
+    /* 44px minimum tap area without changing how the logo looks */
+    min-height: 44px;
+    text-decoration: none;
+}
+.brand__mark{
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    overflow: hidden;
+    color: var(--bg-surface);
+    background-color: var(--brand-primary);
+    border-radius: var(--radius-md);
+}
+.brand__mark svg{
+    width: 30px;
+    height: 30px;
+}
+.brand__text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+.brand__name{
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--brand-primary);
+}
+.brand__tagline{
+    margin-top: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    color: var(--text-secondary);
+}
+
+/* Navigation */
+.site-nav{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 10px 0;
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+}
+.site-nav__inner{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--space-5);
+    row-gap: 10px;
+}
+.site-nav__panel{
+    min-width: 0;
+}
+.site-nav__list{
+    display: flex;
+    /* wrap + min-width:0 keep the row inside narrow screens instead of
+       forcing a sideways page scroll */
+    flex-wrap: wrap;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+}
+.site-nav__list a{
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+.site-nav__list a[aria-current="page"]{
+    color: var(--link-btn);
+}
+
+/* Menu toggle (hamburger). Hidden by default: it only appears on small
+   screens when JS is available, so the plain list stays usable without it */
+.nav-toggle{
+    display: none;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+.nav-toggle__bars{
+    display: grid;
+    gap: 5px;
+    width: 20px;
+}
+.nav-toggle__bars span{
+    display: block;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: transform var(--transition-base),
+        opacity var(--transition-fast);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1){
+    transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2){
+    opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3){
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Buttons */
+.btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--bg-surface);
+    cursor: pointer;
+    background-color: var(--brand-primary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+.btn--primary{
+    background-color: var(--link-btn);
+}
+
+/* Forms */
+.form-inline{
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.input{
+    width: 200px;
+    padding: var(--space-2) var(--space-3);
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+.input::placeholder{
+    color: var(--text-secondary);
+}
+.input:focus{
+    outline: none;
+    border-color: var(--link-btn);
+    box-shadow: 0 0 0 var(--ring-offset) var(--ring-link);
+}
+/* Keyboard users get a full-strength ring instead of the faint focus shadow */
+.input:focus-visible{
+    outline: 2px solid var(--link-btn);
+    outline-offset: 1px;
+}
+
+/* Main */
+.site-main{
+    min-height: 80vh;
+    padding: var(--space-10) 0;
+}
+
+/* Section heading */
+.section__header{
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+.section__title{
+    position: relative;
+    margin: 0;
+    padding-left: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+.section__title--sm{
+    font-size: 18px;
+}
+.section__title::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    /* 1em keeps the accent bar in step with whatever font size is set */
+    width: 5px;
+    height: 1em;
+    background: var(--link-btn);
+    transform: translateY(-50%);
+}
+
+/* ---------- Panels (Latest / Magazine / Trending) ---------- */
+.spotlight{
+    margin-top: var(--space-10);
+}
+.spotlight__grid{
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+}
+.panel{
+    min-width: 0;
+}
+/* Panel heading row: heading left, action right (Latest News) */
+.panel__head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+.panel__more{
+    display: inline-block;
+    /* 4px vertical padding keeps the link at least 24px tall on pointer devices */
+    padding: 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--link-btn);
+}
+
+/* Latest news rows: thumbnail left, tag + meta + headline right */
+.story-list{
+    border-top: 1px solid var(--border);
+}
+.story__link{
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: 12px 0;
+}
+.story + .story .story__link{
+    border-top: 1px solid var(--border);
+}
+.story__body{
+    flex: 1;
+    min-width: 0;
+}
+.story__meta{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: 4px;
+}
+.story__tag{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--link-btn);
+}
+/* Pushes the time and reading time to the far end of the tag row */
+.story__meta .article-meta{
+    margin-left: auto;
+}
+.story__title{
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+}
+
+/* Trending rows: rank + thumbnail left, headline and meta right */
+.trend-list{
+    counter-reset: trend;
+    border-top: 1px solid var(--border);
+}
+.trend{
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+}
+.trend:first-child{
+    border-top: 0;
+}
+.trend__link{
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+}
+.trend__body{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.trend__title{
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+}
+.trend__rank{
+    /* The list is an ordered list, so the number is decorative for
+       assistive technology */
+    flex: 0 0 auto;
+    width: 22px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    /* Large text still needs 3:1, which --text-faint misses */
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    transition: color var(--transition-fast);
+}
+
+/* Magazine slider */
+.slider{
+    position: relative;
+}
+.slider__viewport{
+    /* No-JS fallback: the slides stay swipeable instead of showing dead
+       controls. slider.js adds .js-slider-ready, which takes over below. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: var(--radius-md);
+}
+.slider__viewport::-webkit-scrollbar{
+    display: none;
+}
+.slider__track{
+    display: flex;
+}
+.slider__slide{
+    flex: 0 0 100%;
+    height: 430px;
+    scroll-snap-align: start;
+    border-radius: 0;
+}
+.slider__slide img{
+    border-radius: 0;
+}
+/* The overlay strip sits on the image, under the caption text. 132px clears
+   the tallest stack: overlay padding + the 44px controls + the button, which
+   grows to 44px on touch devices */
+.slider__slide .media-card__body{
+    padding-bottom: 132px;
+}
+.js-slider-ready .slider__viewport{
+    overflow: hidden;
+    scroll-snap-type: none;
+}
+.js-slider-ready .slider__track{
+    transition: transform 0.45s ease;
+}
+/* Stacks the magazine button and the controls along the bottom of the slide;
+   flex-end keeps the button directly under the summary whatever the caption
+   height is */
+.slider__overlay{
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    /* Click-through: only the button, the arrows and the dots are targets */
+    pointer-events: none;
+}
+.slider__overlay > *{
+    pointer-events: auto;
+}
+.slider__controls{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    /* Wraps rather than pushing the controls past a 320px viewport once the
+       dots carry their full 44px tap area */
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+.js-slider-ready .slider__controls{
+    display: flex;
+}
+.slider__btn{
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--bg-surface);
+    cursor: pointer;
+    background-color: var(--overlay-soft);
+    border: 1px solid var(--overlay-line);
+    border-radius: 50%;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    transition: background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+.slider__dots{
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.slider__dot{
+    /* 44px button carrying a 9px dot drawn by ::after, so the tap area meets
+       the minimum without a bulky control */
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+}
+.slider__dot::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    /* Pale dots keep contrast on the dark caption gradient behind them */
+    background-color: var(--on-media-faint);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+.slider__dot.is-active::after{
+    background-color: var(--bg-surface);
+    transform: translate(-50%, -50%) scale(1.25);
+}
+
+/* Email subscription */
+.subscribe{
+    margin-top: var(--space-10);
+}
+.subscribe__inner{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background-color: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+.subscribe__copy{
+    flex: 1 1 320px;
+    min-width: 0;
+}
+.subscribe__text{
+    margin-top: var(--space-2);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+/* Higher specificity than the generic .form-inline rule in the media
+   queries, so the form keeps a 320px basis and wraps onto its own line
+   instead of being squeezed to a few pixels */
+.subscribe__inner .subscribe__form{
+    flex: 1 1 320px;
+    min-width: 0;
+}
+.subscribe__form .input{
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    background-color: var(--bg-surface);
+}
+
+/* Category / news meta label above a headline */
+.meta{
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Article meta row (time ago + reading time). One component, reused by the
+   featured cards, the latest news list and the trending list */
+.article-meta{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px var(--space-3);
+    font-size: 12px;
+    line-height: 1.4;
+    /* 4.8:1 on white, where --text-faint would only reach 2.5:1 */
+    color: var(--text-secondary);
+}
+.article-meta__item{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+/* Divider between the time and the reading time */
+.article-meta__item + .article-meta__item{
+    padding-left: var(--space-3);
+    border-left: 1px solid var(--border);
+}
+.article-meta svg{
+    flex: 0 0 auto;
+    width: 13px;
+    height: 13px;
+}
+
+/* Media card (image + overlay headline). Reused by the hero and news blocks */
+.media-card{
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+}
+.media-card__link{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--bg-surface);
+}
+.media-card__link::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* The dark band reaches past the top of the tallest caption, so summary,
+       meta and button text keep their contrast even over a bright photo */
+    background: linear-gradient(
+        to top,
+        var(--overlay),
+        var(--overlay-mid) 62%,
+        var(--overlay-veil) 82%,
+        var(--overlay-fade)
+    );
+}
+.media-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    transition: transform var(--transition-slow);
+}
+.media-card__body{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    padding: var(--space-5);
+}
+.media-card__title{
+    font-size: 20px;
+    line-height: 1.25;
+}
+/* Short summary under a headline on the image overlay */
+.media-card__summary{
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--on-media);
+}
+/* Trailing-arrow button on a media caption. Shared by the hero lead card and
+   the magazine slider. align-self keeps it at its label width: children of the
+   slider overlay would otherwise stretch to the full column */
+.media-cta{
+    align-self: flex-start;
+}
+.media-cta__arrow{
+    font-size: 18px;
+    line-height: 1;
+    transition: transform var(--transition-base);
+}
+/* Hero lead: the button is pinned under the caption's meta row */
+.media-card--lead .media-cta{
+    position: absolute;
+    bottom: var(--space-5);
+    left: var(--space-5);
+    z-index: 3;
+}
+/* Caption keeps clear of the button above it */
+.media-card--lead .media-card__body{
+    padding-bottom: 76px;
+}
+/* Breathing room between the headline block and the meta row, whether the
+   summary is present or not */
+.media-card__title + .article-meta,
+.media-card__summary + .article-meta{
+    margin-top: var(--space-2);
+}
+/* On the dark overlay the meta row and its dividers switch to the light
+   palette used by the rest of the caption */
+.media-card__body .article-meta{
+    color: var(--on-media);
+}
+.media-card__body .article-meta__item + .article-meta__item{
+    border-left-color: var(--overlay-line);
+}
+/* Byline reads a shade brighter than the timestamps */
+.media-card__body .article-meta__item--by{
+    font-weight: 600;
+    color: var(--bg-surface);
+}
+.media-card--lead .media-card__title{
+    font-size: 32px;
+}
+.media-card__link:focus-visible{
+    outline: 3px solid var(--bg-surface);
+    outline-offset: -3px;
+}
+
+/* Hero layout (2 columns, lead card + stacked column) */
+.hero{
+    padding: var(--space-5) 0;
+}
+.hero__grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    height: 500px;
+}
+.hero__side,
+.hero__row{
+    display: grid;
+    gap: var(--space-5);
+    min-height: 0;
+}
+.hero__side{
+    grid-template-rows: 1fr 1fr;
+}
+.hero__row{
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Card (icon + title + text + arrow link) */
+.card{
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-muted);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base),
+        box-shadow var(--transition-base),
+        border-color var(--transition-base);
+}
+.card__link{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    min-height: 120px;
+    padding: 10px;
+    color: inherit;
+    text-decoration: none;
+}
+.card__icon{
+    display: grid;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    color: var(--accent-blue);
+    background: var(--bg-accent-soft);
+    border-radius: 50%;
+}
+.card__icon svg{
+    width: 24px;
+    height: 24px;
+}
+.card__body{
+    flex: 1;
+    min-width: 0;
+}
+.card__title{
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.card__text{
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-muted);
+}
+.card__arrow{
+    flex: 0 0 auto;
+    font-size: 22px;
+    color: var(--text-faint);
+    transition: transform var(--transition-base),
+        color var(--transition-base);
+}
+
+/* News card (same shell, photo + headline + summary) */
+.card--news{
+    border-top: 3px solid var(--link-btn);
+}
+.card--news .card__link{
+    align-items: stretch;
+    gap: 0;
+    height: 100%;
+    padding: 0;
+    text-align: left;
+}
+.card__media{
+    width: 100%;
+    /* height:auto overrides the img height attribute (applied as a
+       presentational hint) so aspect-ratio can drive the height */
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background-color: var(--bg-light);
+    transition: transform var(--transition-slow);
+}
+.card--news .card__body{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+}
+.card--news .meta{
+    margin-bottom: 0;
+}
+.card--news .card__title{
+    margin: 0;
+    font-size: 17px;
+}
+/* Time and reading time sit at the bottom of the card, so the meta line stays
+   aligned across a row of cards of equal height */
+.card--news .article-meta{
+    margin-top: auto;
+    padding-top: var(--space-2);
+}
+
+/* Featured stories */
+.featured{
+    margin-top: var(--space-10);
+}
+
+/* Footer */
+.site-footer{
+    margin-top: var(--space-10);
+    background-color: var(--bg-primary);
+    border-top: 1px solid var(--border);
+}
+.footer-grid{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: var(--space-6);
+    padding: var(--space-10) 0;
+}
+.footer__about{
+    margin-top: var(--space-4);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.footer__title{
+    margin: 0 0 var(--space-4);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+.footer__list li + li{
+    margin-top: 10px;
+}
+.footer__list a{
+    /* keeps each link at least 24px tall (WCAG 2.2 target size) on pointer devices */
+    display: inline-block;
+    padding: 3px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+.footer__contact p{
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: normal;
+}
+.footer__contact a{
+    /* keeps each link at least 24px tall (WCAG 2.2 target size) on pointer devices */
+    display: inline-block;
+    padding: 3px 0;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+.footer__contact p + p{
+    margin-top: 10px;
+}
+
+/* Icon-only social links */
+.social-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+.social-link{
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    transition: color var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+.social-link svg{
+    width: 18px;
+    height: 18px;
+}
+
+/* Copyright bar */
+.footer-bottom{
+    padding: var(--space-4) 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+.footer-bottom p{
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* ---------- 5. Hover states (mouse / trackpad devices only) ---------- */
+/* Kept out of touch devices so a tap does not leave a stuck hover state */
+@media (hover: hover) and (pointer: fine){
+    .site-nav__list a:hover{
+        color: var(--link-btn);
+        background-color: var(--tint-link);
+    }
+
+    .btn:hover{
+        background-color: var(--link-btn-dark);
+    }
+
+    .media-card__link:hover img{
+        transform: scale(1.05);
+    }
+
+    .card:hover{
+        border-color: var(--border-strong);
+        box-shadow: var(--shadow-card-hover);
+        transform: translateY(-3px);
+    }
+
+    .card:hover .card__arrow{
+        color: var(--accent-blue);
+        transform: translateX(4px);
+    }
+
+    .card--news:hover .card__media{
+        transform: scale(1.05);
+    }
+
+
+    .story__link:hover .story__title,
+    .trend__link:hover .trend__title{
+        color: var(--link-btn);
+    }
+
+    .trend:hover .trend__rank{
+        color: var(--link-btn);
+    }
+
+    .panel__more:hover{
+        text-decoration: underline;
+    }
+
+    .media-cta:hover .media-cta__arrow{
+        transform: translateX(4px);
+    }
+
+    .slider__btn:hover{
+        background-color: var(--overlay);
+        border-color: var(--bg-surface);
+    }
+
+    .slider__dot:hover::after{
+        background-color: var(--bg-surface);
+    }
+
+    .social-link:hover{
+        color: var(--link-btn);
+        background-color: var(--tint-link);
+        border-color: var(--link-btn);
+    }
+
+    .footer__contact a:hover{
+        color: var(--link-btn);
+    }
+
+    .nav-toggle:hover{
+        background-color: var(--tint-link);
+    }
+}
+
+/* ---------- 6. Responsive ---------- */
+@media (max-width: 1200px){
+    .u-cols-5{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1024px){
+    .hero__grid{
+        height: 520px;
+    }
+
+    /* Three panels no longer fit side by side: magazine on top, lists below */
+    .spotlight__grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .panel--feature{
+        grid-column: 1 / -1;
+        order: -1;
+    }
+
+    .footer-grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5);
+    }
+
+    /* Column counts step down so cards never squeeze below a readable width */
+    .u-cols-6{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .u-cols-4{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px){
+    /* Nav scrolls away with the content instead of permanently covering
+       a large part of a phone screen (stays sticky on tablet/desktop) */
+    .site-nav{
+        position: static;
+    }
+
+    .spotlight{
+        margin-top: var(--space-6);
+    }
+
+    .spotlight__grid{
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+
+    /* The overlay strip now carries the button as well, so the slide needs a
+       little more height to keep a usable slice of photo on screen */
+    .slider__slide{
+        height: 340px;
+    }
+
+    .subscribe{
+        margin-top: var(--space-6);
+    }
+
+    .subscribe__inner{
+        padding: var(--space-5);
+    }
+
+    .hero__grid{
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .hero__side{
+        grid-template-rows: 220px 220px;
+    }
+
+    .media-card--lead{
+        height: 300px;
+    }
+
+    .media-card--lead .media-card__title{
+        font-size: 26px;
+    }
+
+    .media-card__title{
+        font-size: 17px;
+    }
+
+    .u-cols-6,
+    .u-cols-5,
+    .u-cols-3{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .site-nav__list{
+        gap: 4px;
+    }
+
+    /* Hamburger menu (JS only). Closed panel is display:none, so its links
+       leave the tab order and the accessibility tree while collapsed */
+    .js-nav-ready .nav-toggle{
+        order: 1;
+        display: inline-flex;
+    }
+
+    .js-nav-ready .site-nav__panel{
+        order: 3;
+        flex-basis: 100%;
+        display: none;
+        flex-direction: column;
+    }
+
+    .js-nav-ready .site-nav__panel.is-open{
+        display: flex;
+    }
+
+    .js-nav-ready .site-nav__list{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+    }
+
+    /* Nav links stack for the collapsed mobile menu; tap-target sizing
+       lives in the pointer:coarse block so there is only one rule set */
+    .site-nav__list a{
+        display: flex;
+        align-items: center;
+        /* full-bleed rows even when the coarse-pointer rule makes them
+           inline-flex */
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    /* Search stays reachable without opening the menu */
+    .form-inline{
+        order: 2;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .form-inline .input{
+        flex: 1;
+        /* min-width:0 lets the input shrink below its intrinsic size so the
+           row can never push the search button past the viewport edge */
+        min-width: 0;
+        width: auto;
+    }
+
+    .brand__tagline{
+        font-size: 11px;
+    }
+
+    .site-footer,
+    .site-main{
+        padding-top: var(--space-6);
+        padding-bottom: var(--space-6);
+    }
+}
+
+@media (max-width: 480px){
+    .brand__name{
+        font-size: 22px;
+    }
+
+    /* News headlines need a full-width column to stay readable */
+    .u-cols-5{
+grid-template-columns: 1fr;
+    }
+
+    /* Four dots at their full 44px no longer fit beside the arrows on the
+       narrowest phones, so they tighten instead of wrapping onto a second row
+       (which would push the controls up into the summary) */
+    .slider__dot{
+        width: 32px;
+    }
+
+    .featured{
+        margin-top: var(--space-6);
+    }
+
+    .site-footer{
+        margin-top: var(--space-6);
+    }
+
+    .footer-grid{
+        grid-template-columns: 1fr;
+padding: var(--space-6) 0;
+    }
+
+    .section__title{
+        font-size: 20px;
+    }
+
+    .hero__row{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 200px);
+    }
+
+    .hero__side{
+        grid-template-rows: 220px 420px;
+    }
+
+    /* The lead caption now carries a summary, a meta row and the button, so the
+       card needs more height than the headline alone needed */
+    .media-card--lead{
+        height: 320px;
+    }
+
+    .media-card--lead .media-card__title{
+        font-size: 22px;
+    }
+
+    .form-inline{
+        width: 100%;
+    }
+
+    /* Footer keeps clear of the home indicator on notched phones */
+    .site-footer{
+        padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom));
+    }
+}
+
+/* Touch devices of any size (phones, tablets): tap targets by input method,
+   not by screen width. 16px controls also avoid iOS focus zoom. */
+@media (pointer: coarse){
+    .site-nav__list a,
+    .footer__list a,
+    .footer__contact a,
+    .social-link,
+    .panel__more,
+    .slider__btn,
+    .btn{
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    /* Thumbnail rows stay block-level flex (inline-flex would shrink-wrap the
+       row) and only grow the tap height */
+    .story__link,
+    .trend__link{
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    .input{
+        min-height: 44px;
+    }
+
+    .btn,
+    .input{
+        font-size: 16px;
+    }
+
+    /* Short labels like "Home" are narrower than the minimum on their own,
+       so the single-word footer links get a floor as well */
+    .footer__list a{
+        min-width: 44px;
+    }
+
+    /* Square off the circular controls: min-height alone left them ovals,
+       and the shared inline-flex rule needs explicit cross-axis centring */
+    .slider__btn,
+    .social-link{
+        min-width: 44px;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+    }
+
+    /* Four 44px dots plus two 44px buttons have to share a 290px-wide
+       320px viewport, so the controls tighten their spacing to fit */
+    .slider__controls{
+        gap: var(--space-1);
+    }
+
+    .slider__dots{
+        gap: var(--space-1);
+    }
+}
+
+/* Landscape phones: trim tap target height, stacked hero keeps auto height */
+@media (max-height: 500px) and (orientation: landscape){
+    .site-nav__list a{
+        min-height: 36px;
+    }
+}
+
+/* ---------- 7. Motion preferences ---------- */
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .media-card__link:hover img{
+        transform: none;
+    }
+}
