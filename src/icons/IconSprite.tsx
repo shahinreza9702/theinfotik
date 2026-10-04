@@ -28,7 +28,7 @@ export default function IconSprite() {
             <path
                 d="M12 7.4C10.6 6 8.6 5.4 6 5.4H3.6v11.2H6c2.4 0 4.4.6 6 2 1.6-1.4 3.6-2 6-2h2.4V5.4H18c-2.6 0-4.6.6-6 2Z"
                 stroke="currentColor" strokeWidth="1.8" stroke-linejoin="round" />
-            <path d="M12 7.4v11.2" stroke="currentColor" strokeWidth="1.8" stroke-linecap="round" />
+            <path d="M12 7.4v11.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </symbol>
     </svg>
     );
