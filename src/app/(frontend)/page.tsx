@@ -1,14 +1,26 @@
-import Image from "next/image";
+import HeroSection from "../components/frontend/home/HeroSection";
+import FeatureStories from "../components/frontend/home/FeatureStories";
+import CategorySection from "../components/frontend/home/CategorySection";
+import LatestNews from "../components/frontend/home/LatestNews";
+import MagazineSlider from "../components/frontend/home/MagazineSlider";
+import TrendingNow from "../components/frontend/home/TrendingNow";
+import SubscribeSection from "../components/frontend/home/SubscribeSection";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="">
-      {/* Hero Section */}
+    <main className="site-main">
       <div className="container">
-        <h1 className="text-4xl font-bold text-center">Welcome to The Infotik</h1>
-        <p className="text-lg text-center text-gray-600">
-          Your source of information
-        </p>
+        <HeroSection />
+        <CategorySection />
+        <FeatureStories />
+        <section className="spotlight">
+          <div className="spotlight__grid">
+            <LatestNews />
+            <MagazineSlider />
+            <TrendingNow />
+          </div>
+        </section>
+        <SubscribeSection />
       </div>
     </main>
   );
