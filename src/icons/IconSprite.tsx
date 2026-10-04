@@ -13,7 +13,7 @@ export default function IconSprite() {
         </symbol>
         <symbol id="icon-x" viewBox="0 0 24 24">
             <path d="M4.5 4.5 19.5 19.5M19.5 4.5 4.5 19.5" stroke="currentColor" strokeWidth="2.6"
-                stroke-linecap="round" />
+                strokeLinecap="round" />
         </symbol>
         <symbol id="icon-instagram" viewBox="0 0 24 24">
             <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" stroke="currentColor" strokeWidth="1.8" />
@@ -27,7 +27,7 @@ export default function IconSprite() {
         <symbol id="icon-book" viewBox="0 0 24 24" fill="none">
             <path
                 d="M12 7.4C10.6 6 8.6 5.4 6 5.4H3.6v11.2H6c2.4 0 4.4.6 6 2 1.6-1.4 3.6-2 6-2h2.4V5.4H18c-2.6 0-4.6.6-6 2Z"
-                stroke="currentColor" strokeWidth="1.8" stroke-linejoin="round" />
+                stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
             <path d="M12 7.4v11.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </symbol>
     </svg>
