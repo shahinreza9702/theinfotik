@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import {fetchCategories} from '@/lib/api';
 
 interface NavLink {
     slug: string;
@@ -11,14 +12,9 @@ interface NavLink {
 
 
 const NavLinks = async () => {
-    const res = await fetch('https://news-api-v2.vercel.app/api/categories');
-    
-    if (!res.ok) {
-        throw new Error('Failed to fetch navigation links');
-    }
-    const data = await res.json();
-    const navs: NavLink[] = data.data;
-    const filteredNavs = navs.filter((n: NavLink) => n.scrapable);
+    const categories: NavLink[] = await fetchCategories();
+
+    const filteredNavs = categories.filter((n: NavLink) => n.scrapable);
     return (
         <nav className="site-nav" aria-label="Primary navigation">
             <div className="container">
