@@ -1,6 +1,6 @@
 import HeroSection from "../components/frontend/home/HeroSection";
 import FeatureStories from "../components/frontend/home/FeatureStories";
-import CategorySection from "../components/frontend/home/CategorySection";
+import CategorySection from "@/app/components/frontend/CategorySection";
 import LatestNews from "../components/frontend/home/LatestNews";
 import MagazineSlider from "../components/frontend/home/MagazineSlider";
 import TrendingNow from "../components/frontend/home/TrendingNow";

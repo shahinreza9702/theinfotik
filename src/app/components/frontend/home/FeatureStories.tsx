@@ -22,12 +22,10 @@ import { getNews } from '@/lib/api';
 const FeatureStories = async () => {
     const featuredStories: FeatureStories[] = await getNews({
         limit:5,
+        sortBy:"firstPublished",
+        order: "desc",
     })
-    featuredStories.sort(
-        (a, b) =>
-            new Date(b.lastPublished).getTime() -
-            new Date(a.lastPublished).getTime()
-    );
+    
 
     return (
         <section className="featured">
@@ -37,7 +35,7 @@ const FeatureStories = async () => {
             <div className="u-grid u-cols-5 u-gap-md">
                 {featuredStories.map((story) => (
                     <article className="card card--news" key={story.title}>
-                        <Link href="/article/digital-payments/" className="card__link">
+                        <Link href={`/${story.title}`} className="card__link">
                             <Image className="card__media" src={story.imageUrl} width="3000" height="2000"
                                 alt={story.imageAlt} loading="lazy"
                                 decoding="async" />
