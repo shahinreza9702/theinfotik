@@ -37,6 +37,7 @@ export async function getNewsSection(){
         throw new Error("Failed to fetch news sections");
     }
     const data = await res.json();
+       
     return data.data;   
 }
 
