@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import NavLinks from './NavLinks';
 
 const Header = () => {
@@ -7,7 +8,7 @@ const Header = () => {
             <header className="site-header">
                 <div className="container">
                     {/* <!-- Logo --> */}
-                    <a href="/" className="brand">
+                    <Link href="/" className="brand">
                         <span className="brand__mark">
                             <svg viewBox="0 0 19.9 40" xmlns="http://www.w3.org/2000/svg" aria-label="The Infotik logo"
                                 role="img">
@@ -25,7 +26,7 @@ const Header = () => {
                                 Your source of information
                             </span>
                         </span>
-                    </a>
+                    </Link>
                 </div>
             </header>
             <NavLinks />

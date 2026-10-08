@@ -88,7 +88,9 @@ export async function getMostRead() {
 }
 
 export async function getCategory(slug: string) {
-    const res = await fetch(`${API_URL}/category/${encodeURIComponent(slug)}`);
+    const res = await fetch(
+        `${API_URL}/category/${encodeURIComponent(slug)}`
+    );
 
     if (!res.ok) {
         return null;
@@ -96,8 +98,33 @@ export async function getCategory(slug: string) {
 
     const data = await res.json();
 
-    return data.data;
+    return {
+        id: data.topicId,
+        title: data.title,
+        slug: data.slug,
+        posts: data.data,
+        count: data.count,
+        page: data.page,
+        pageCount: data.pageCount,
+    };
 }
+
+export async function getCategoryNews(
+    category: string,
+    params?: {
+        limit?: number;
+        offset?: number;
+        sortBy?: string;
+        order?: "asc" | "desc";
+    }
+) {
+    return getNews({
+        ...params,
+        category,
+    });
+}
+
+
 
 export async function getArticle(id: string) {
     const res = await fetch(`${API_URL}/article/${id}`);
@@ -122,7 +149,10 @@ export async function getArticle(id: string) {
  */
 export async function getArticleBySlug(slug: string) {
     const res = await fetch(
-        `${API_URL}/news?q=${encodeURIComponent(slug)}`
+        `${API_URL}/news?q=${encodeURIComponent(slug)}&limit=50`,
+        {
+            cache: "no-store",
+        }
     );
 
     if (!res.ok) {
@@ -130,6 +160,15 @@ export async function getArticleBySlug(slug: string) {
     }
 
     const data = await res.json();
+
+    console.log("SEARCH SLUG:", slug);
+    console.log(
+        "SEARCH RESULTS:",
+        data.data?.map((item: { id: string; title: string }) => ({
+            id: item.id,
+            title: item.title,
+        }))
+    );
 
     const articles = data.data;
 
@@ -139,12 +178,13 @@ export async function getArticleBySlug(slug: string) {
 
     return (
         articles.find(
-            (article) =>
-                article.slug === slug ||
-                article.title === slug
+            (article) => article.title === slug
         ) ?? null
     );
 }
+
+
+
 
 
 /**

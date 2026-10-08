@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
     return (
@@ -7,7 +8,7 @@ const Footer = () => {
                 <div className="footer-grid">
                     {/* <!-- Branding --> */}
                     <div className="footer__brand">
-                        <a href="/" className="brand">
+                        <Link href="/" className="brand">
                             <span className="brand__mark">
                                 <svg viewBox="0 0 19.9 40" xmlns="http://www.w3.org/2000/svg" aria-label="The Infotik logo"
                                     role="img">
@@ -21,7 +22,7 @@ const Footer = () => {
                                 <span className="brand__name">The Infotik</span>
                                 <span className="brand__tagline">Your source of information</span>
                             </span>
-                        </a>
+                        </Link>
                         <p className="footer__about">Headlines from Bangladesh and around the world — business,
                             technology, lifestyle and opinion, reported daily.</p>
                     </div>
@@ -30,11 +31,11 @@ const Footer = () => {
                     <nav className="footer__col" aria-labelledby="footer-links-title">
                         <h2 className="footer__title" id="footer-links-title">Quick Links</h2>
                         <ul className="footer__list">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/latest/">Latest News</a></li>
-                            <li><a href="/featured/">Featured Stories</a></li>
-                            <li><a href="/privacy/">Privacy Policy</a></li>
-                            <li><a href="/terms/">Terms of Service</a></li>
+                            <li><Link href="/">Home</Link></li>
+                            <li><Link href="/latest/">Latest News</Link></li>
+                            <li><Link href="/featured/">Featured Stories</Link></li>
+                            <li><Link href="/privacy/">Privacy Policy</Link></li>
+                            <li><Link href="/terms/">Terms of Service</Link></li>
                         </ul>
                     </nav>
 
@@ -43,30 +44,30 @@ const Footer = () => {
                         <h2 className="footer__title" id="footer-follow-title">Follow Us</h2>
                         <ul className="social-list" aria-labelledby="footer-follow-title">
                             <li>
-                                <a className="social-link" href="/social/facebook/" aria-label="The Infotik on Facebook">
+                                <a className="social-link" href="https://facebook.com" aria-label="The Infotik on Facebook" target="_blank" rel="noopener noreferrer">
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <use href="#icon-facebook"></use>
+                                        <use href="#icon-facebook" />
                                     </svg>
                                 </a>
                             </li>
                             <li>
-                                <a className="social-link" href="/social/x/" aria-label="The Infotik on X">
+                                <a className="social-link" href="https://x.com" aria-label="The Infotik on X" target="_blank" rel="noopener noreferrer">
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <use href="#icon-x"></use>
+                                        <use href="#icon-x" />
                                     </svg>
                                 </a>
                             </li>
                             <li>
-                                <a className="social-link" href="/social/instagram/" aria-label="The Infotik on Instagram">
+                                <a className="social-link" href="https://instagram.com" aria-label="The Infotik on Instagram" target="_blank" rel="noopener noreferrer">
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <use href="#icon-instagram"></use>
+                                        <use href="#icon-instagram" />
                                     </svg>
                                 </a>
                             </li>
                             <li>
-                                <a className="social-link" href="/social/youtube/" aria-label="The Infotik on YouTube">
+                                <a className="social-link" href="https://youtube.com" aria-label="The Infotik on YouTube" target="_blank" rel="noopener noreferrer">
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                        <use href="#icon-youtube"></use>
+                                        <use href="#icon-youtube" />
                                     </svg>
                                 </a>
                             </li>

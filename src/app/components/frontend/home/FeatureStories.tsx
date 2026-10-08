@@ -2,25 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getNews } from '@/lib/api';
+import { Article } from '@/lib/types';
 
-
-  interface FeatureStories  {
-    id: string;
-    title: string;
-    description: string;
-    link: string;
-    imageUrl: string;
-    imageAlt: string;
-    category: string;
-    type: string;
-    isLive: Boolean;
-    firstPublished: string;
-    lastPublished: string;
-    source: string;
-    }
 
 const FeatureStories = async () => {
-    const featuredStories: FeatureStories[] = await getNews({
+    const featuredStories: Article[] = await getNews({
         limit:5,
         sortBy:"firstPublished",
         order: "desc",
@@ -34,8 +20,8 @@ const FeatureStories = async () => {
             </div>
             <div className="u-grid u-cols-5 u-gap-md">
                 {featuredStories.map((story) => (
-                    <article className="card card--news" key={story.title}>
-                        <Link href={`/${story.title}`} className="card__link">
+                    <article className="card card--news" key={story.id}>
+                        <Link href={`/${story.slug}`} className="card__link">
                             <Image className="card__media" src={story.imageUrl} width="3000" height="2000"
                                 alt={story.imageAlt} loading="lazy"
                                 decoding="async" />
